@@ -90,7 +90,7 @@
           <div class="surface-spinner" aria-hidden="true"></div>
           <model-viewer
             id="surfaceModel"
-            src="assets/kfc-bucket.glb?v=2"
+            src="assets/kfc-bucket.glb?v=3"
             poster="assets/mnemonic.png?v=2"
             alt="KFC Bangladesh 20 Years chicken bucket"
             ar
@@ -102,14 +102,19 @@
             shadow-intensity="1"
             shadow-softness=".8"
             exposure="1"
+            xr-environment
             loading="eager">
             <button class="native-ar-trigger" slot="ar-button" type="button" tabindex="-1" aria-hidden="true">Open AR</button>
+            <div id="arPrompt" class="ar-prompt">
+              <strong>Find a surface</strong>
+              <span>Point at a floor or table and move your phone slowly.</span>
+            </div>
           </model-viewer>
           <p id="surfaceStatus" class="surface-status" role="status">Preparing the bucket…</p>
           <button id="surfaceRetryButton" class="primary-button surface-retry" type="button" hidden>Try again</button>
         </div>
       </section>
     </main>
-    <script src="app.js?v=5" defer></script>
+    <script src="app.js?v=6" defer></script>
   </body>
 </html>

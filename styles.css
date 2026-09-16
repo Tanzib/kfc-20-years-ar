@@ -346,6 +346,13 @@ button { font: inherit; }
   padding: 28px;
   text-align: center;
 }
+.surface-launch-shell > h2,
+.surface-launch-shell > p,
+.surface-launch-shell > .surface-spinner,
+.surface-launch-shell > .surface-retry {
+  position: relative;
+  z-index: 2;
+}
 .surface-launch-shell h2 { margin: 0; font-size: clamp(1.7rem, 7vw, 2.45rem); }
 .surface-launch-shell > p { max-width: 34ch; margin: 0; color: rgba(255,255,255,.8); line-height: 1.45; }
 .surface-spinner {
@@ -363,12 +370,35 @@ button { font: inherit; }
 .surface-copy p { margin: 0; color: rgba(255,255,255,.8); line-height: 1.45; }
 .surface-panel model-viewer {
   position: fixed;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: auto;
 }
 .native-ar-trigger { display: none; }
+.ar-prompt {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: calc(34px + env(safe-area-inset-bottom));
+  display: none;
+  width: min(88vw, 420px);
+  padding: 14px 18px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 18px;
+  color: #fff;
+  background: rgba(20,0,4,.78);
+  box-shadow: 0 12px 36px rgba(0,0,0,.3);
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+.ar-prompt strong,
+.ar-prompt span { display: block; }
+.ar-prompt span { margin-top: 4px; color: rgba(255,255,255,.8); font-size: .82rem; }
+model-viewer[ar-status="session-started"] .ar-prompt { display: block; }
+model-viewer[ar-status="object-placed"] .ar-prompt { display: none; }
 .surface-status { min-height: 1.3em; margin: 0; color: rgba(255,255,255,.75); font-size: .82rem; text-align: center; }
 .surface-retry { width: min(100%, 300px); }
 .surface-retry[hidden] { display: none; }
