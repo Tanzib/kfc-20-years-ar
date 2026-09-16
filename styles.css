@@ -231,7 +231,8 @@ button { font: inherit; }
   cursor: pointer;
 }
 
-.help-panel[hidden] { display: none; }
+.welcome[hidden],
+.help-panel[hidden] { display: none !important; }
 .help-card { position: relative; text-align: left; }
 .help-card h2 { margin: 0 44px 18px 0; }
 .help-card ol { margin: 0; padding-left: 22px; color: rgba(255,255,255,.88); line-height: 1.6; }
