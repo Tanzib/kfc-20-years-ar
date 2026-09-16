@@ -7,7 +7,7 @@
     <meta name="description" content="KFC Bangladesh 20 Years interactive camera experience" />
     <title>KFC Bangladesh — 20 Years</title>
     <link rel="icon" type="image/png" href="assets/mnemonic.png?v=2" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body>
     <main id="app" class="app" aria-label="KFC 20 Years interactive experience">
@@ -35,8 +35,13 @@
         <div><strong>Drag to rotate</strong><span>Pinch to resize · Double-tap to reset</span></div>
       </section>
 
+      <button id="captureButton" class="capture-button" type="button" aria-label="Capture photo">
+        <span aria-hidden="true"></span>
+      </button>
+
       <button id="startButton" class="start-button" type="button">Start camera experience</button>
       <p id="status" class="status" role="status"></p>
+      <canvas id="captureCanvas" hidden></canvas>
 
       <section id="welcome" class="welcome" aria-labelledby="welcomeTitle">
         <div class="welcome-card">
@@ -60,7 +65,21 @@
           </ol>
         </div>
       </section>
+
+      <section id="capturePreview" class="capture-preview" aria-labelledby="captureTitle" hidden>
+        <div class="capture-card">
+          <button id="closeCapture" class="close-button" type="button" aria-label="Close photo preview">×</button>
+          <h2 id="captureTitle">Your KFC moment</h2>
+          <img id="capturedImage" alt="Captured KFC 20 Years camera photo" />
+          <div class="capture-actions">
+            <button id="shareCapture" class="primary-button" type="button">Share photo</button>
+            <a id="downloadCapture" class="secondary-button" download="kfc-20-years-moment.png">Download</a>
+            <button id="retakeCapture" class="text-button" type="button">Retake</button>
+          </div>
+          <p id="shareStatus" class="share-status" role="status"></p>
+        </div>
+      </section>
     </main>
-    <script src="app.js" defer></script>
+    <script src="app.js?v=3" defer></script>
   </body>
 </html>
