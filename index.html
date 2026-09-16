@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#e4002b" />
+    <meta name="description" content="KFC Bangladesh 20 Years interactive camera experience" />
+    <title>KFC Bangladesh — 20 Years</title>
+    <link rel="icon" type="image/png" href="assets/mnemonic.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="app" class="app" aria-label="KFC 20 Years interactive experience">
+      <video id="camera" class="camera" playsinline muted aria-hidden="true"></video>
+      <div class="camera-fallback" aria-hidden="true"></div>
+      <div class="shade" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <div class="brand" aria-label="KFC Bangladesh">
+          <span class="brand-stripes" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>KFC BANGLADESH</span>
+        </div>
+        <button id="helpButton" class="icon-button" type="button" aria-label="Show instructions">?</button>
+      </header>
+
+      <section id="stage" class="stage" aria-label="Interactive 20 Years mnemonic. Drag to rotate and pinch to resize.">
+        <div id="object" class="object" role="img" aria-label="20 Years of KFC mnemonic">
+          <div class="face face-front"><img src="assets/mnemonic.png" alt="" draggable="false" /></div>
+          <div class="face face-back"><img src="assets/mnemonic.png" alt="" draggable="false" /></div>
+        </div>
+      </section>
+
+      <section class="instruction" aria-live="polite">
+        <span class="gesture" aria-hidden="true">↔</span>
+        <div><strong>Drag to rotate</strong><span>Pinch to resize · Double-tap to reset</span></div>
+      </section>
+
+      <button id="startButton" class="start-button" type="button">Start camera experience</button>
+      <p id="status" class="status" role="status"></p>
+
+      <section id="welcome" class="welcome" aria-labelledby="welcomeTitle">
+        <div class="welcome-card">
+          <img src="assets/mnemonic.png" alt="20 Years of KFC" class="welcome-logo" />
+          <h1 id="welcomeTitle">Celebrate 20 years with us</h1>
+          <p>See the anniversary mnemonic in your space and move it with your fingers.</p>
+          <button id="enterButton" class="primary-button" type="button">Open camera</button>
+          <small>Your camera stays on this device. No photo or video is uploaded.</small>
+        </div>
+      </section>
+
+      <section id="help" class="help-panel" aria-labelledby="helpTitle" hidden>
+        <div class="help-card">
+          <button id="closeHelp" class="close-button" type="button" aria-label="Close instructions">×</button>
+          <h2 id="helpTitle">How to interact</h2>
+          <ol>
+            <li>Drag left or right to rotate the mnemonic.</li>
+            <li>Drag up or down to tilt it.</li>
+            <li>Pinch with two fingers to resize it.</li>
+            <li>Double-tap anywhere on it to reset.</li>
+          </ol>
+        </div>
+      </section>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>
