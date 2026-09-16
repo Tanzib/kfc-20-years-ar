@@ -7,7 +7,8 @@
     <meta name="description" content="KFC Bangladesh 20 Years interactive camera experience" />
     <title>KFC Bangladesh — 20 Years</title>
     <link rel="icon" type="image/png" href="assets/mnemonic.png?v=2" />
-    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=5" />
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   </head>
   <body>
     <main id="app" class="app" aria-label="KFC 20 Years interactive experience">
@@ -20,7 +21,10 @@
           <span class="brand-stripes" aria-hidden="true"><i></i><i></i><i></i></span>
           <span>KFC BANGLADESH</span>
         </div>
-        <button id="helpButton" class="icon-button" type="button" aria-label="Show instructions">?</button>
+        <div class="top-actions">
+          <button id="surfaceButton" class="surface-button" type="button">Place on surface</button>
+          <button id="helpButton" class="icon-button" type="button" aria-label="Show instructions">?</button>
+        </div>
       </header>
 
       <section id="stage" class="stage" aria-label="Interactive 20 Years mnemonic. Drag to rotate and pinch to resize.">
@@ -49,6 +53,7 @@
           <h1 id="welcomeTitle">Celebrate 20 years with us</h1>
           <p>See the anniversary mnemonic in your space and move it with your fingers.</p>
           <button id="enterButton" class="primary-button" type="button">Open camera</button>
+          <button id="welcomeSurfaceButton" class="outline-button" type="button">Place on a floor or table</button>
           <small>Your camera stays on this device. No photo or video is uploaded.</small>
         </div>
       </section>
@@ -79,7 +84,37 @@
           <p id="shareStatus" class="share-status" role="status"></p>
         </div>
       </section>
+
+      <section id="surfacePanel" class="surface-panel" aria-labelledby="surfaceTitle" hidden>
+        <div class="surface-shell">
+          <button id="closeSurface" class="close-button" type="button" aria-label="Close surface placement">×</button>
+          <div class="surface-copy">
+            <span class="surface-kicker">Surface AR</span>
+            <h2 id="surfaceTitle">Place the bucket in your space</h2>
+            <p>Tap the button, move your phone slowly to detect a floor or table, then tap the surface to place it.</p>
+          </div>
+          <model-viewer
+            id="surfaceModel"
+            src="assets/kfc-bucket.glb?v=1"
+            poster="assets/mnemonic.png?v=2"
+            alt="KFC Bangladesh 20 Years chicken bucket"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            ar-placement="floor"
+            ar-scale="auto"
+            camera-controls
+            shadow-intensity="1"
+            shadow-softness=".8"
+            exposure="1"
+            touch-action="pan-y"
+            loading="eager">
+            <button id="surfaceArButton" class="surface-ar-button" slot="ar-button" type="button">Detect surface &amp; place</button>
+          </model-viewer>
+          <p id="surfaceStatus" class="surface-status" role="status">Works best in a well-lit area with a visible floor or tabletop.</p>
+          <button id="surfaceCameraButton" class="outline-button" type="button">Return to camera mode</button>
+        </div>
+      </section>
     </main>
-    <script src="app.js?v=3" defer></script>
+    <script src="app.js?v=4" defer></script>
   </body>
 </html>

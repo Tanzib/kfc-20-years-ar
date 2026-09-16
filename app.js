@@ -18,6 +18,13 @@ const retakeCapture = document.querySelector('#retakeCapture');
 const closeCapture = document.querySelector('#closeCapture');
 const shareStatus = document.querySelector('#shareStatus');
 const mnemonicImage = document.querySelector('.face-front img');
+const surfaceButton = document.querySelector('#surfaceButton');
+const welcomeSurfaceButton = document.querySelector('#welcomeSurfaceButton');
+const surfacePanel = document.querySelector('#surfacePanel');
+const closeSurface = document.querySelector('#closeSurface');
+const surfaceCameraButton = document.querySelector('#surfaceCameraButton');
+const surfaceModel = document.querySelector('#surfaceModel');
+const surfaceStatus = document.querySelector('#surfaceStatus');
 
 const state = {
   rotateX: -4,
@@ -269,6 +276,33 @@ function closePhotoPreview() {
   shareStatus.textContent = '';
 }
 
+function stopCamera() {
+  state.stream?.getTracks().forEach((track) => track.stop());
+  state.stream = null;
+  camera.srcObject = null;
+  camera.classList.remove('is-live');
+  captureButton.classList.remove('is-visible');
+}
+
+function openSurfaceMode() {
+  stopCamera();
+  welcome.hidden = true;
+  capturePreview.hidden = true;
+  surfacePanel.hidden = false;
+  surfaceStatus.textContent = 'Works best in a well-lit area with a visible floor or tabletop.';
+}
+
+function closeSurfaceMode() {
+  surfacePanel.hidden = true;
+  welcome.hidden = false;
+}
+
+async function returnToCameraMode() {
+  surfacePanel.hidden = true;
+  welcome.hidden = true;
+  await startCamera();
+}
+
 enterButton.addEventListener('click', async () => {
   welcome.hidden = true;
   await startCamera();
@@ -280,12 +314,25 @@ shareCapture.addEventListener('click', sharePhoto);
 retakeCapture.addEventListener('click', closePhotoPreview);
 closeCapture.addEventListener('click', closePhotoPreview);
 capturePreview.addEventListener('click', (event) => { if (event.target === capturePreview) closePhotoPreview(); });
+surfaceButton.addEventListener('click', openSurfaceMode);
+welcomeSurfaceButton.addEventListener('click', openSurfaceMode);
+closeSurface.addEventListener('click', closeSurfaceMode);
+surfaceCameraButton.addEventListener('click', returnToCameraMode);
+surfaceModel.addEventListener('ar-status', (event) => {
+  const messages = {
+    'session-started': 'Move your phone slowly until a floor or table is detected.',
+    'object-placed': 'Bucket placed. Drag to move, rotate, or resize it.',
+    'failed': 'Surface AR could not start on this device. Return to camera mode to continue.',
+    'not-presenting': 'Tap “Detect surface & place” to begin.',
+  };
+  surfaceStatus.textContent = messages[event.detail.status] || surfaceStatus.textContent;
+});
 helpButton.addEventListener('click', () => { help.hidden = false; });
 closeHelp.addEventListener('click', () => { help.hidden = true; });
 help.addEventListener('click', (event) => { if (event.target === help) help.hidden = true; });
 
 window.addEventListener('pagehide', () => {
-  state.stream?.getTracks().forEach((track) => track.stop());
+  stopCamera();
 });
 
 render();
