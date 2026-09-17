@@ -321,7 +321,7 @@ surfaceRetryButton.addEventListener('click', launchSurfaceAR);
 surfaceModel.addEventListener('ar-status', (event) => {
   const messages = {
     'session-started': 'Move your phone slowly until a floor or table is detected.',
-    'object-placed': 'Bucket placed. Drag to move, rotate, or resize it.',
+    'object-placed': 'Bucket placed. Twist with two fingers to rotate it in 360°, pinch to resize, or drag to move.',
     'failed': 'Surface detection could not start. Check camera permission and try again.',
     'not-presenting': 'Tap “Try again” to reopen the AR camera.',
   };

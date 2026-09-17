@@ -394,11 +394,31 @@ button { font: inherit; }
   text-align: center;
   backdrop-filter: blur(12px);
 }
+.ar-controls {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: calc(34px + env(safe-area-inset-bottom));
+  display: none;
+  width: min(92vw, 460px);
+  padding: 12px 16px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255,255,255,.38);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(20,0,4,.74);
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+.ar-controls strong,
+.ar-controls span { display: block; }
+.ar-controls span { margin-top: 3px; color: rgba(255,255,255,.8); font-size: .72rem; }
 .ar-prompt strong,
 .ar-prompt span { display: block; }
 .ar-prompt span { margin-top: 4px; color: rgba(255,255,255,.8); font-size: .82rem; }
 model-viewer[ar-status="session-started"] .ar-prompt { display: block; }
 model-viewer[ar-status="object-placed"] .ar-prompt { display: none; }
+model-viewer[ar-status="object-placed"] .ar-controls { display: block; }
 .surface-status { min-height: 1.3em; margin: 0; color: rgba(255,255,255,.75); font-size: .82rem; text-align: center; }
 .surface-retry { width: min(100%, 300px); }
 .surface-retry[hidden] { display: none; }

@@ -90,13 +90,15 @@
           <div class="surface-spinner" aria-hidden="true"></div>
           <model-viewer
             id="surfaceModel"
-            src="assets/kfc-bucket.glb?v=3"
+            src="assets/kfc-bucket.glb?v=4"
             poster="assets/mnemonic.png?v=2"
             alt="KFC Bangladesh 20 Years chicken bucket"
             ar
             ar-modes="webxr scene-viewer quick-look"
             ar-placement="floor"
             ar-scale="auto"
+            camera-controls
+            interaction-prompt="none"
             camera-orbit="0deg 90deg auto"
             field-of-view="30deg"
             shadow-intensity="1"
@@ -109,12 +111,16 @@
               <strong>Find a surface</strong>
               <span>Point at a floor or table and move your phone slowly.</span>
             </div>
+            <div class="ar-controls">
+              <strong>Rotate in 360°</strong>
+              <span>Twist with two fingers · Pinch to resize · Drag to move</span>
+            </div>
           </model-viewer>
           <p id="surfaceStatus" class="surface-status" role="status">Preparing the bucket…</p>
           <button id="surfaceRetryButton" class="primary-button surface-retry" type="button" hidden>Try again</button>
         </div>
       </section>
     </main>
-    <script src="app.js?v=6" defer></script>
+    <script src="app.js?v=7" defer></script>
   </body>
 </html>
