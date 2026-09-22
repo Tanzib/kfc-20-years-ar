@@ -7,7 +7,7 @@
     <meta name="description" content="KFC Bangladesh 20 Years interactive camera experience" />
     <title>KFC Bangladesh — 20 Years</title>
     <link rel="icon" type="image/png" href="assets/mnemonic.png?v=2" />
-    <link rel="stylesheet" href="styles.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=10" />
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   </head>
   <body>
@@ -50,7 +50,7 @@
         <div class="welcome-card">
           <img src="assets/mnemonic.png?v=2" alt="20 Years of KFC" class="welcome-logo" />
           <h1 id="welcomeTitle">Celebrate 20 years with us</h1>
-          <p>Place the anniversary mnemonic on a floor or table, then move around it.</p>
+          <p>Place the anniversary mnemonic on a floor or table, then capture and share your photo.</p>
           <button id="enterButton" class="primary-button" type="button">Find a surface</button>
           <small>Your camera stays on this device. No photo or video is uploaded.</small>
         </div>
@@ -65,6 +65,7 @@
             <li>When the placement marker appears, tap the surface.</li>
             <li>Twist with two fingers to rotate the mnemonic.</li>
             <li>Pinch to resize, or drag to reposition it.</li>
+            <li>Tap the camera button to save or share your AR photo.</li>
           </ol>
         </div>
       </section>
@@ -72,10 +73,10 @@
       <section id="surfacePanel" class="surface-panel" aria-label="Surface tracking">
         <model-viewer
           id="surfaceModel"
-          src="assets/kfc-bucket.glb?v=9"
+          src="assets/kfc-bucket.glb?v=10"
           alt="KFC Bangladesh 20 Years anniversary mnemonic"
           ar
-          ar-modes="webxr scene-viewer quick-look"
+          ar-modes="scene-viewer quick-look webxr"
           ar-placement="floor"
           ar-scale="auto"
           camera-controls
@@ -110,6 +111,6 @@
       </section>
 
     </main>
-    <script src="app.js?v=9" defer></script>
+    <script src="app.js?v=10" defer></script>
   </body>
 </html>
