@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#e4002b" />
+    <title>KFC Bangladesh — 20 Years 3D Prototype</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+      :root { font-family: Arial, Helvetica, sans-serif; color: #fff; background: #8d001b; }
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+      body { background: radial-gradient(circle at 50% 42%, #f1244a, #e4002b 42%, #780017); }
+      header {
+        position: fixed; z-index: 2; top: 0; left: 0; right: 0;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: calc(15px + env(safe-area-inset-top)) 18px 14px;
+        pointer-events: none;
+      }
+      .brand { display: flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 900; letter-spacing: .08em; }
+      .stripes { display: flex; gap: 3px; transform: skew(-10deg); }
+      .stripes i { display: block; width: 5px; height: 24px; background: #fff; }
+      .badge { padding: 7px 10px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; font-size: .7rem; }
+      model-viewer { width: 100%; height: 100%; background: transparent; --poster-color: transparent; }
+      .ar-button {
+        position: absolute; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom));
+        transform: translateX(-50%); min-width: min(82vw, 340px); min-height: 56px;
+        padding: 12px 22px; border: 0; border-radius: 999px;
+        color: #e4002b; background: #fff; font-weight: 900; box-shadow: 0 12px 34px rgba(0,0,0,.28);
+      }
+      .hint {
+        position: absolute; left: 50%; bottom: calc(98px + env(safe-area-inset-bottom));
+        transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px);
+        padding: 10px 15px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px;
+        background: rgba(0,0,0,.28); backdrop-filter: blur(10px); text-align: center; font-size: .76rem;
+      }
+      .ar-prompt {
+        position: absolute; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom));
+        transform: translateX(-50%); width: min(88%, 420px); padding: 14px 18px;
+        border-radius: 18px; background: rgba(20,0,5,.78); text-align: center;
+      }
+      .ar-prompt strong, .ar-prompt span { display: block; }
+      .ar-prompt span { margin-top: 4px; color: rgba(255,255,255,.8); font-size: .78rem; line-height: 1.35; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand"><span class="stripes"><i></i><i></i><i></i></span>KFC BANGLADESH</div>
+      <div class="badge">3D PROTOTYPE</div>
+    </header>
+    <model-viewer
+      src="assets/kfc-20-years-3d.glb?v=1"
+      alt="3D KFC Bangladesh 20 Years anniversary bucket"
+      ar
+      ar-modes="scene-viewer quick-look webxr"
+      ar-placement="floor"
+      ar-scale="auto"
+      camera-controls
+      auto-rotate
+      auto-rotate-delay="1800"
+      rotation-per-second="18deg"
+      camera-target="0m 0.115m 0m"
+      camera-orbit="0deg 72deg 0.48m"
+      min-camera-orbit="auto 28deg 0.28m"
+      max-camera-orbit="auto 88deg 0.9m"
+      shadow-intensity="0.8"
+      shadow-softness="0.75"
+      tone-mapping="neutral"
+      exposure="1.05"
+      interaction-prompt="auto"
+      loading="eager"
+      xr-environment>
+      <button class="ar-button" slot="ar-button" type="button">View in your space</button>
+      <div class="hint">Drag to rotate · Pinch to resize</div>
+      <div class="ar-prompt" slot="ar-prompt">
+        <strong>Find a floor or table</strong>
+        <span>Move your phone slowly, then tap the detected surface.</span>
+      </div>
+    </model-viewer>
+  </body>
+</html>
