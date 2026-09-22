@@ -20,8 +20,8 @@ const shareStatus = document.querySelector('#shareStatus');
 const mnemonicImage = document.querySelector('.face-front img');
 const surfacePanel = document.querySelector('#surfacePanel');
 const surfaceModel = document.querySelector('#surfaceModel');
-const surfaceStatus = document.querySelector('#surfaceStatus');
-const surfaceRetryButton = document.querySelector('#surfaceRetryButton');
+const surfaceLoader = document.querySelector('#surfaceLoader');
+const surfaceRetry = document.querySelector('#surfaceRetry');
 
 const state = {
   rotateX: -4,
@@ -39,6 +39,7 @@ const state = {
 };
 
 let animationFrame;
+let arSessionStarted = false;
 
 function render() {
   object.style.transform = `rotateX(${state.rotateX}deg) rotateY(${state.rotateY}deg) scale(${state.scale})`;
@@ -281,55 +282,74 @@ function stopCamera() {
   captureButton.classList.remove('is-visible');
 }
 
-function showSurfaceError(message) {
-  surfaceStatus.textContent = message;
-  surfaceRetryButton.hidden = false;
+function waitForModel() {
+  if (surfaceModel.loaded) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const timeout = window.setTimeout(() => reject(new Error('The AR artwork took too long to load.')), 15000);
+    surfaceModel.addEventListener('load', () => {
+      window.clearTimeout(timeout);
+      resolve();
+    }, { once: true });
+    surfaceModel.addEventListener('error', () => {
+      window.clearTimeout(timeout);
+      reject(new Error('The AR artwork could not be loaded.'));
+    }, { once: true });
+  });
 }
 
-function launchSurfaceAR() {
-  stopCamera();
+async function launchSurfaceAR() {
   welcome.hidden = true;
-  capturePreview.hidden = true;
   surfacePanel.hidden = false;
-  surfaceRetryButton.hidden = true;
-  surfaceStatus.textContent = 'Opening the camera and surface detection…';
-
-  if (typeof surfaceModel.activateAR !== 'function') {
-    showSurfaceError('Surface AR is not supported in this browser. Please open this page in Chrome on Android or Safari on iPhone.');
-    return;
-  }
+  surfaceLoader.hidden = false;
+  surfaceLoader.textContent = 'Starting surface tracking…';
+  surfaceRetry.hidden = true;
+  status.textContent = '';
+  stopCamera();
 
   try {
-    const result = surfaceModel.activateAR();
-    Promise.resolve(result).catch(() => {
-      showSurfaceError('The AR camera could not open. Allow camera access, then tap “Try again”.');
-    });
+    if (!window.isSecureContext) throw new Error('Surface tracking requires a secure HTTPS page.');
+    await customElements.whenDefined('model-viewer');
+    await waitForModel();
+
+    if (!surfaceModel.canActivateAR) {
+      throw new Error('Surface tracking is not available on this phone or browser. Use Android Chrome with Google Play Services for AR installed.');
+    }
+
+    await surfaceModel.activateAR();
   } catch (error) {
-    showSurfaceError('The AR camera could not open. Allow camera access, then tap “Try again”.');
+    surfaceLoader.textContent = error.message || 'Surface tracking could not start. Please try again.';
+    surfaceRetry.hidden = false;
   }
 }
 
-enterButton.addEventListener('click', launchSurfaceAR);
+enterButton.addEventListener('click', async () => {
+  await launchSurfaceAR();
+});
 
 startButton.addEventListener('click', startCamera);
+surfaceRetry.addEventListener('click', launchSurfaceAR);
+surfaceModel.addEventListener('ar-status', (event) => {
+  const arStatus = event.detail.status;
+  if (arStatus === 'session-started') {
+    arSessionStarted = true;
+    surfaceLoader.hidden = true;
+  } else if (arStatus === 'object-placed') {
+    surfaceLoader.hidden = true;
+  } else if (arStatus === 'failed') {
+    surfaceLoader.hidden = false;
+    surfaceLoader.textContent = 'Surface tracking could not start. Check camera permission and try again.';
+    surfaceRetry.hidden = false;
+  } else if (arStatus === 'not-presenting' && arSessionStarted) {
+    arSessionStarted = false;
+    welcome.hidden = false;
+    surfaceLoader.hidden = true;
+  }
+});
 captureButton.addEventListener('click', capturePhoto);
 shareCapture.addEventListener('click', sharePhoto);
 retakeCapture.addEventListener('click', closePhotoPreview);
 closeCapture.addEventListener('click', closePhotoPreview);
 capturePreview.addEventListener('click', (event) => { if (event.target === capturePreview) closePhotoPreview(); });
-surfaceRetryButton.addEventListener('click', launchSurfaceAR);
-surfaceModel.addEventListener('ar-status', (event) => {
-  const messages = {
-    'session-started': 'Move your phone slowly until a floor or table is detected.',
-    'object-placed': 'Bucket placed. Twist with two fingers to rotate it in 360°, pinch to resize, or drag to move.',
-    'failed': 'Surface detection could not start. Check camera permission and try again.',
-    'not-presenting': 'Tap “Try again” to reopen the AR camera.',
-  };
-  surfaceStatus.textContent = messages[event.detail.status] || surfaceStatus.textContent;
-  if (event.detail.status === 'failed' || event.detail.status === 'not-presenting') {
-    surfaceRetryButton.hidden = false;
-  }
-});
 helpButton.addEventListener('click', () => { help.hidden = false; });
 closeHelp.addEventListener('click', () => { help.hidden = true; });
 help.addEventListener('click', (event) => { if (event.target === help) help.hidden = true; });
